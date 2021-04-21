@@ -1,0 +1,25 @@
+[package]
+authors = ["Adrian Wannenmacher <tfld@tfld.dev>"]
+description = "Network Interface MOnitor"
+edition = "2018"
+name = "nimo"
+repository = "https://github.com/TeFiLeDo/nimo"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "*"
+chrono = { version = "*", features = [ "serde" ] }
+env_logger = "*"
+figment = { version = "*", features = ["env", "toml"] }
+fs2 = "*"
+home = "*"
+human-panic = "*"
+log = "*"
+ron = "*"
+serde = { version = "*", features = ["derive"] }
+serde_json = "*"
+structopt = "*"
+surge-ping = "*"
+tokio = { version = "*", features = ["net", "rt-multi-thread"] }
