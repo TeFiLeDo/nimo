@@ -17,6 +17,7 @@ use ron::{
 };
 use structopt::StructOpt;
 
+mod completion;
 mod config;
 mod data;
 mod emit;
@@ -35,6 +36,7 @@ struct Opt {
 
 #[derive(Debug, StructOpt)]
 enum Command {
+    Completion(completion::Command),
     Emit(emit::Command),
     Ping(ping::Command),
     SpeedTest(speedtest::Command),
@@ -58,6 +60,7 @@ async fn main() -> Result<()> {
     let now = Utc::now();
 
     match opt.command {
+        Command::Completion(c) => c.execute().context("failed to execute completion")?,
         Command::Emit(c) => c.execute().context("failed to execute emit")?,
         Command::Ping(c) => {
             let res = c
