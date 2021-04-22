@@ -13,18 +13,18 @@ version = "0.1.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "*"
-chrono = { version = "*", features = [ "serde" ] }
-env_logger = "*"
-figment = { version = "*", features = ["env", "toml"] }
-fs2 = "*"
-home = "*"
-human-panic = "*"
-include_dir = "*"
-log = "*"
-ron = "*"
-serde = { version = "*", features = ["derive"] }
-serde_json = "*"
-structopt = "*"
-surge-ping = "*"
-tokio = { version = "*", features = ["net", "rt-multi-thread"] }
+anyhow = "1.0"
+chrono = { version = "0.4", features = [ "serde" ] }
+env_logger = "0.8"
+figment = { version = "0.10", features = ["env", "toml"] }
+fs2 = "0.4"
+home = "0.5"
+human-panic = "1.0"
+include_dir = "0.6"
+log = "0.4"
+ron = "0.6"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+structopt = "0.3"
+surge-ping = "0.2"
+tokio = { version = "1.5", features = ["net", "rt-multi-thread"] }
