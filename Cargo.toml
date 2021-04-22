@@ -16,6 +16,7 @@ figment = { version = "*", features = ["env", "toml"] }
 fs2 = "*"
 home = "*"
 human-panic = "*"
+include_dir = "*"
 log = "*"
 ron = "*"
 serde = { version = "*", features = ["derive"] }

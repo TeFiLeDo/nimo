@@ -19,6 +19,7 @@ use structopt::StructOpt;
 
 mod config;
 mod data;
+mod emit;
 mod ping;
 mod speedtest;
 
@@ -34,6 +35,7 @@ struct Opt {
 
 #[derive(Debug, StructOpt)]
 enum Command {
+    Emit(emit::Command),
     Ping(ping::Command),
     SpeedTest(speedtest::Command),
 }
@@ -56,6 +58,7 @@ async fn main() -> Result<()> {
     let now = Utc::now();
 
     match opt.command {
+        Command::Emit(c) => c.execute().context("failed to execute emit")?,
         Command::Ping(c) => {
             let res = c
                 .execute(&config.ping)
