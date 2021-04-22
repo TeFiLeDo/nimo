@@ -1,7 +1,10 @@
 [package]
 authors = ["Adrian Wannenmacher <tfld@tfld.dev>"]
+categories = ["command-line-utilities"]
 description = "Network Interface MOnitor"
 edition = "2018"
+keywords = ["utility", "tool", "status", "speedtest"]
+license = "mit"
 name = "nimo"
 repository = "https://github.com/TeFiLeDo/nimo"
 version = "0.1.0"
