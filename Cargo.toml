@@ -6,6 +6,7 @@ edition = "2018"
 keywords = ["utility", "tool", "status", "speedtest"]
 license = "mit"
 name = "nimo"
+readme = "README.md"
 repository = "https://github.com/TeFiLeDo/nimo"
 version = "0.1.0"
 
