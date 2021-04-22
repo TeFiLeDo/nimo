@@ -1,9 +1,9 @@
 use std::{
-    fs::{File, OpenOptions},
+    fs::{create_dir_all, File, OpenOptions},
     io::{BufReader, BufWriter, Seek, SeekFrom},
 };
 
-use anyhow::{Context, Result};
+use anyhow::{anyhow, Context, Result};
 use chrono::Utc;
 use figment::{
     providers::{Env, Format, Toml},
@@ -99,6 +99,14 @@ fn load_config() -> Result<Config> {
 }
 
 fn load_data(config: &Config) -> Result<(Data, File)> {
+    if let Some(x) = config.data.parent() {
+        if x.is_file() {
+            return Err(anyhow!("data directory is file"))?;
+        } else if !x.exists() {
+            create_dir_all(x).context("failed to create data directory")?;
+        }
+    }
+
     let file = OpenOptions::new()
         .read(true)
         .write(true)
