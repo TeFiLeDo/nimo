@@ -11,5 +11,5 @@ pub struct Config {
 }
 
 fn default_data_path() -> PathBuf {
-    PathBuf::from("/var/lib/netspeedmonitor/data")
+    PathBuf::from("/var/lib/nimo/data")
 }
