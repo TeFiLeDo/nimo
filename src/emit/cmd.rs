@@ -1,8 +1,4 @@
-use std::{
-    fmt::Display,
-    fs::{self, write},
-    str::FromStr,
-};
+use std::fs::{self, write};
 
 use anyhow::{Context, Result};
 use include_dir::{include_dir, Dir};
@@ -12,6 +8,7 @@ static SYSTEMD: Dir = include_dir!("./systemd");
 /// Emits some provided system configuration files into `/tmp`.
 #[derive(Debug, structopt::StructOpt)]
 pub struct Command {
+    #[structopt(subcommand)]
     pub target: EmitTarget,
 }
 
@@ -41,24 +38,9 @@ impl Command {
 
 #[derive(Debug, structopt::StructOpt)]
 pub enum EmitTarget {
+    /// Emit files relevant to systemd
+    ///
+    /// This will emit systemd service and timer files to run 'nimo ping' and 'nimo speed-test'
+    /// periodically.
     Systemd,
-}
-
-impl Display for EmitTarget {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(match self {
-            Self::Systemd => "systemd",
-        })
-    }
-}
-
-impl FromStr for EmitTarget {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Ok(match s {
-            "systemd" => Self::Systemd,
-            _ => return Err("unknown target".to_string()),
-        })
-    }
 }
