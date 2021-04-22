@@ -1,4 +1,4 @@
-use std::process::Command as Cmd;
+use std::{io::ErrorKind::NotFound, process::Command as Cmd};
 
 use anyhow::{anyhow, Context, Result};
 use log::{debug, error};
@@ -20,11 +20,16 @@ impl Command {
         }
 
         debug!("running test");
-        let output = Cmd::new("speedtest")
-            .arg("--format")
-            .arg("json")
-            .output()
-            .context("failed to run speedtest-cli")?;
+        let output = match Cmd::new("speedtest").arg("--format").arg("json").output() {
+            Ok(x) => x,
+            Err(e) => {
+                if let NotFound = e.kind() {
+                    return Err(anyhow!(r#""speedtest" command not found"#));
+                } else {
+                    return Err(e).context("failed to run speedtest cli");
+                }
+            }
+        };
 
         debug!("deserializing output");
         let val: Value =
