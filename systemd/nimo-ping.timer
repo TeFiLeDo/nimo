@@ -1,0 +1,9 @@
+[Unit]
+Description=timer for triggering ping test
+
+[Timer]
+OnBootSec=1m
+OnUnitActiveSec=1m
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=timer for triggering speed test
+
+[Timer]
+OnBootSec=1m
+OnUnitActiveSec=30m
+
+[Install]
+WantedBy=timers.target

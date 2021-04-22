@@ -1,0 +1,6 @@
+[Unit]
+Description=running speed test
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/nimo ping
