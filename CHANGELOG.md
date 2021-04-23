@@ -12,6 +12,9 @@ these deviations:
 
 ## [Unreleased]
 
+### Added
+- [Started a changelog at `CHANGELOG.md`](https://github.com/TeFiLeDo/nimo/pull/1)
+
 [unreleased]: https://github.com/TeFiLeDo/nimo/compare/v0.1.0...HEAD
 
 ## [0.1.0]: Initial release - 2020-04-22
