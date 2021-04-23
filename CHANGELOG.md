@@ -21,6 +21,7 @@ these deviations:
 
 - [Moved the `completion` subcommand into the `emit` subcommand](https://github.com/TeFiLeDo/nimo/pull/2)
 - [Subcommands that don't change the data will now run without write access to the data file](https://github.com/TeFiLeDo/nimo/pull/3)
+- [Enable useres to accept the eula of the speedtest cli](https://github.com/TeFiLeDo/nimo/pull/5)
 
 [unreleased]: https://github.com/TeFiLeDo/nimo/compare/v0.1.0...HEAD
 
