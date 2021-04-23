@@ -15,6 +15,7 @@ these deviations:
 ### Added
 
 - [Started a changelog at `CHANGELOG.md`](https://github.com/TeFiLeDo/nimo/pull/1)
+- [The `speed-test` subcommand now automatically retries up to five times if a test results in an error](https://github.com/TeFiLeDo/nimo/pull/4)
 
 ### Changed
 
