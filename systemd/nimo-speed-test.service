@@ -4,3 +4,4 @@ Description=running ping test
 [Service]
 Type=oneshot
 ExecStart=/usr/local/bin/nimo speed-test
+User=root
