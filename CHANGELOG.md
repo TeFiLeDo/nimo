@@ -12,6 +12,13 @@ these deviations:
 
 ## [Unreleased]
 
+[unreleased]: https://github.com/TeFiLeDo/nimo/compare/v0.2.0...HEAD
+
+## [0.2.0]: Buzzing Bumblebee - 2020-04-25
+
+This is the first ever update to _nimo_. It focuses mainly on fixing a few oversights from
+[v0.1.0][0.1.0]. It also is the first version to feature a changelog.
+
 ### Added
 
 - [Started a changelog at `CHANGELOG.md`](https://github.com/TeFiLeDo/nimo/pull/1)
@@ -24,7 +31,7 @@ these deviations:
 - [Subcommands that don't change the data will now run without write access to the data file](https://github.com/TeFiLeDo/nimo/pull/3)
 - [Enable useres to accept the eula of the speedtest cli](https://github.com/TeFiLeDo/nimo/pull/5)
 
-[unreleased]: https://github.com/TeFiLeDo/nimo/compare/v0.1.0...HEAD
+[0.2.0]: https://github.com/TeFiLeDo/nimo/compare/v0.1.0...v0.2.0
 
 ## [0.1.0]: Initial release - 2020-04-22
 
