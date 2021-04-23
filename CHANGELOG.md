@@ -16,6 +16,7 @@ these deviations:
 
 - [Started a changelog at `CHANGELOG.md`](https://github.com/TeFiLeDo/nimo/pull/1)
 - [The `speed-test` subcommand now automatically retries up to five times if a test results in an error](https://github.com/TeFiLeDo/nimo/pull/4)
+- [The `emit` subcommand now prints a list of all emitted files, unless the contend was printed to stdout in the first place.](https://github.com/TeFiLeDo/nimo/pull/6)
 
 ### Changed
 
