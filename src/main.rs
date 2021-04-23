@@ -50,15 +50,26 @@ async fn main() -> Result<()> {
     let config = load_config()?;
     debug!("loaded config: {:#?}", &config);
 
+    if let Command::Emit(c) = opt.command {
+        return c.execute().context("failed to execute emit");
+    }
+
+    let save = match opt.command {
+        Command::Ping(_) => true,
+        Command::SpeedTest(_) => true,
+        _ => false,
+    };
+
     debug!("loading data");
-    let (mut data, mut file) = load_data(&config)?;
+    let (mut data, mut file) = load_data(&config, save)?;
     debug!("loaded data: {:#?}", &data);
+    debug!("data {} be saved", if save { "will" } else { "will not" });
 
     debug!("executing command");
     let now = Utc::now();
 
     match opt.command {
-        Command::Emit(c) => c.execute().context("failed to execute emit")?,
+        Command::Emit(_) => panic!("emit should already have exited"),
         Command::Ping(c) => {
             let res = c
                 .execute(&config.ping)
@@ -78,9 +89,13 @@ async fn main() -> Result<()> {
         }
     }
 
-    debug!("saving data");
-    save_data(&data, &mut file)?;
-    debug!("saved data");
+    if save {
+        debug!("saving data");
+        save_data(&data, &mut file)?;
+        debug!("saved data");
+    } else {
+        debug!("data was not modified");
+    }
 
     Ok(())
 }
@@ -95,7 +110,7 @@ fn load_config() -> Result<Config> {
     cfg.extract().context("failed to load configuration")
 }
 
-fn load_data(config: &Config) -> Result<(Data, File)> {
+fn load_data(config: &Config, allow_write: bool) -> Result<(Data, File)> {
     if let Some(x) = config.data.parent() {
         if x.is_file() {
             return Err(anyhow!("data directory is file"))?;
@@ -106,11 +121,17 @@ fn load_data(config: &Config) -> Result<(Data, File)> {
 
     let file = OpenOptions::new()
         .read(true)
-        .write(true)
+        .write(allow_write)
         .create(true)
         .open(&config.data)
         .context("failed to open data file")?;
-    file.lock_exclusive().context("failed to lock data file")?;
+
+    if allow_write {
+        file.lock_exclusive()
+    } else {
+        file.lock_shared()
+    }
+    .context("failed to lock data file")?;
 
     let data = if config
         .data
