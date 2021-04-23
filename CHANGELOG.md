@@ -13,7 +13,12 @@ these deviations:
 ## [Unreleased]
 
 ### Added
+
 - [Started a changelog at `CHANGELOG.md`](https://github.com/TeFiLeDo/nimo/pull/1)
+
+### Changed
+
+- [Moved the `completion` subcommand into the `emit` subcommand](https://github.com/TeFiLeDo/nimo/pull/2)
 
 [unreleased]: https://github.com/TeFiLeDo/nimo/compare/v0.1.0...HEAD
 
