@@ -37,11 +37,9 @@ impl Command {
                 if stdout {
                     println!("{}", output);
                 } else {
-                    write(
-                        format!("{}/{}", &path, shell.to_string().to_lowercase()),
-                        output,
-                    )
-                    .context("failed to write completion file")?;
+                    let path = format!("{}/{}", &path, shell.to_string().to_lowercase());
+                    write(&path, output).context("failed to write completion file")?;
+                    println!("{}", &path);
                 }
             }
             EmitTarget::Systemd => {
@@ -49,14 +47,13 @@ impl Command {
                 fs::create_dir_all(&path).context("failed to create tmp dir")?;
 
                 for file in SYSTEMD.files() {
-                    write(
-                        format!("{}/{}", &path, file.path().display()),
-                        file.contents_utf8().unwrap(),
-                    )
-                    .context(format!(
+                    let path = format!("{}/{}", &path, file.path().display());
+
+                    write(&path, file.contents_utf8().unwrap()).context(format!(
                         r#"failed to write file "{}""#,
                         file.path().display()
                     ))?;
+                    println!("{}", &path);
                 }
             }
         };
