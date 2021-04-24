@@ -21,6 +21,7 @@ mod config;
 mod data;
 mod emit;
 mod ping;
+mod report;
 mod speedtest;
 
 use config::Config;
@@ -37,6 +38,7 @@ struct Opt {
 enum Command {
     Emit(emit::Command),
     Ping(ping::Command),
+    Report(report::Command),
     SpeedTest(speedtest::Command),
 }
 
@@ -78,6 +80,7 @@ async fn main() -> Result<()> {
 
             data.pings.insert(now, res);
         }
+        Command::Report(c) => c.execute(&mut data).context("failed to execute report")?,
         Command::SpeedTest(s) => {
             let res = s
                 .execute(&config.speed_test)
@@ -122,7 +125,7 @@ fn load_data(config: &Config, allow_write: bool) -> Result<(Data, File)> {
     let file = OpenOptions::new()
         .read(true)
         .write(allow_write)
-        .create(true)
+        .create(allow_write)
         .open(&config.data)
         .context("failed to open data file")?;
 
