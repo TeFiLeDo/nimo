@@ -15,6 +15,7 @@ these deviations:
 ### Added
 
 - [A new `report` subcommand that prints a few stats to the command line](https://github.com/TeFiLeDo/nimo/pull/8)
+- [Users can now configure the number of retries to do if a speedtest fails](https://github.com/TeFiLeDo/nimo/pull/9)
 
 [unreleased]: https://github.com/TeFiLeDo/nimo/compare/v0.2.0...HEAD
 

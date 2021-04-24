@@ -19,7 +19,7 @@ impl Command {
             return Ok(None);
         }
 
-        for i in 0..5 {
+        for i in 0..(config.retries + 1) {
             debug!("running test attempt {}", i);
             let output = match Cmd::new("speedtest").arg("--format").arg("json").output() {
                 Ok(x) => x,
