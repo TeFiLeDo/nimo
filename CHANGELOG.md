@@ -12,6 +12,10 @@ these deviations:
 
 ## [Unreleased]
 
+### Added
+
+- [A new `report` subcommand that prints a few stats to the command line](https://github.com/TeFiLeDo/nimo/pull/8)
+
 [unreleased]: https://github.com/TeFiLeDo/nimo/compare/v0.2.0...HEAD
 
 ## [0.2.0]: Buzzing Bumblebee - 2020-04-25
