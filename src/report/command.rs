@@ -4,6 +4,7 @@ use anyhow::Result;
 use chrono::{DateTime, Utc};
 
 #[derive(Debug, structopt::StructOpt)]
+/// Prints a few simple evaluations to the command line.
 pub struct Command {
     /// Classify ping tests either as success or failure instead of a spectrum.
     ///
