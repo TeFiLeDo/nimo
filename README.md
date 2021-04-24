@@ -70,6 +70,7 @@ google = "8.8.8.8"
 
 [speed_test]
 enabled = false # if you want to run speed tests, set this to true
+retries = 4
 ```
 
 ## Usage
