@@ -12,15 +12,19 @@ these deviations:
 
 ## [Unreleased]
 
+[unreleased]: https://github.com/TeFiLeDo/nimo/compare/v0.3.0...HEAD
+
+## [0.3.0]: Chanting Cheetah - 2021-04-25
+
 ### Added
 
 - [A new `report` subcommand that prints a few stats to the command line](https://github.com/TeFiLeDo/nimo/pull/8)
 - [Users can now configure the number of retries to do if a speedtest fails](https://github.com/TeFiLeDo/nimo/pull/9)
 - [The `report` subcommand can now filter for last weeks data](https://github.com/TeFiLeDo/nimo/pull/10)
 
-[unreleased]: https://github.com/TeFiLeDo/nimo/compare/v0.2.0...HEAD
+[0.3.0]: https://github.com/TeFiLeDo/nimo/compare/v0.2.0...v0.3.0
 
-## [0.2.0]: Buzzing Bumblebee - 2020-04-25
+## [0.2.0]: Buzzing Bumblebee - 2021-04-24
 
 This is the first ever update to _nimo_. It focuses mainly on fixing a few oversights from
 [v0.1.0][0.1.0]. It also is the first version to feature a changelog.
@@ -39,7 +43,7 @@ This is the first ever update to _nimo_. It focuses mainly on fixing a few overs
 
 [0.2.0]: https://github.com/TeFiLeDo/nimo/compare/v0.1.0...v0.2.0
 
-## [0.1.0]: Initial release - 2020-04-22
+## [0.1.0]: Initial release - 2021-04-22
 
 This is the initial release of this program.
 
