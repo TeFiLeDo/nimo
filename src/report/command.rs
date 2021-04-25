@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 
 use anyhow::Result;
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, Duration, Utc};
 
 #[derive(Debug, structopt::StructOpt)]
 /// Prints a few simple evaluations to the command line.
@@ -14,21 +14,29 @@ pub struct Command {
     /// at least one response to all ping test.
     #[structopt(short, long)]
     clearcut: bool,
+    /// Ignore all data not recorded within the last 7 days.
+    #[structopt(short, long)]
+    last_week: bool,
 }
 
 impl Command {
     pub fn execute(&self, data: &mut crate::Data) -> Result<()> {
-        let reliability = match if !self.clearcut {
-            get_reliability(&data.pings)
+        let after = if !self.last_week {
+            None
         } else {
-            get_clearcut_reliability(&data.pings)
-        } {
-            Some(r) => format!("{}%", r * 100.0),
+            Some(Utc::now() - Duration::days(7))
+        };
+
+        let reliability = match get_reliability(&data.pings, &after, self.clearcut) {
+            Some(r) => format!("{:.3}%", r * 100.0),
             None => "no measurements".into(),
         };
 
-        let (down, up) = match get_avg_speeds(&data.speed_tests) {
-            Some((down, up)) => (down.to_string(), up.to_string()),
+        let (down, up) = match get_avg_speeds(&data.speed_tests, &after) {
+            Some((down, up)) => (
+                format!("{:.3} Mbps", down / 1_000_000.0 * 8.0),
+                format!("{:.3} Mbps", up / 1_000_000.0 * 8.0),
+            ),
             None => ("no measurements".into(), "no measurements".into()),
         };
 
@@ -41,14 +49,34 @@ impl Command {
     }
 }
 
-fn get_reliability(data: &BTreeMap<DateTime<Utc>, crate::ping::Data>) -> Option<f64> {
+fn get_reliability(
+    data: &BTreeMap<DateTime<Utc>, crate::ping::Data>,
+    after: &Option<DateTime<Utc>>,
+    clearcut: bool,
+) -> Option<f64> {
     let mut sent = 0;
     let mut received = 0;
 
-    for (_, targets) in data {
-        for target in targets {
-            sent += target.sent;
-            received += target.received
+    for (recorded, targets) in data {
+        let consider = match after {
+            Some(after) => recorded >= after,
+            None => true,
+        };
+
+        if consider && !clearcut {
+            for target in targets {
+                sent += target.sent;
+                received += target.received;
+            }
+        } else if consider && clearcut {
+            sent += 1;
+
+            for target in targets {
+                if target.received > 0 {
+                    received += 1;
+                    break;
+                }
+            }
         }
     }
 
@@ -59,38 +87,31 @@ fn get_reliability(data: &BTreeMap<DateTime<Utc>, crate::ping::Data>) -> Option<
     }
 }
 
-fn get_clearcut_reliability(data: &BTreeMap<DateTime<Utc>, crate::ping::Data>) -> Option<f64> {
-    let mut successes = 0;
+fn get_avg_speeds(
+    data: &BTreeMap<DateTime<Utc>, crate::speedtest::Data>,
+    after: &Option<DateTime<Utc>>,
+) -> Option<(f64, f64)> {
+    let mut up = 0;
+    let mut down = 0;
+    let mut num = 0;
 
-    'd: for (_, targets) in data {
-        for target in targets {
-            if target.received > 0 {
-                successes += 1;
-                continue 'd;
-            }
+    for (recorded, test) in data {
+        let consider = match after {
+            Some(after) => recorded >= after,
+            None => true,
+        };
+
+        if consider {
+            num += 1;
+            up += test.upload;
+            down += test.download;
         }
     }
 
-    if data.len() > 0 {
-        Some(successes as f64 / data.len() as f64)
-    } else {
-        None
-    }
-}
-
-fn get_avg_speeds(data: &BTreeMap<DateTime<Utc>, crate::speedtest::Data>) -> Option<(f64, f64)> {
-    if data.len() == 0 {
+    if num == 0 {
         return None;
     }
 
-    let mut up = 0;
-    let mut down = 0;
-
-    for (_, test) in data {
-        up += test.upload;
-        down += test.download;
-    }
-
-    let num = data.len() as f64;
+    let num = num as f64;
     Some((down as f64 / num, up as f64 / num))
 }
