@@ -77,7 +77,7 @@ retries = 4
 
 ```
 $ nimo --help
-nimo 0.2.0
+nimo 0.3.0
 Adrian Wannenmacher <tfld@tfld.dev>
 Network Interface MOnitor
 
@@ -92,5 +92,6 @@ SUBCOMMANDS:
     emit          Emits some provided system configuration files into `/tmp`
     help          Prints this message or the help of the given subcommand(s)
     ping          Tests current internet connectivity utilizing pinging
+    report        Prints a few simple evaluations to the command line
     speed-test    Tests current internet speed utilizing speedtest.net
 ```
