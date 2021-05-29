@@ -4,8 +4,8 @@ use anyhow::{anyhow, Context, Result};
 use log::{debug, error};
 use serde_json::{from_slice, Value};
 
-const DT: &'static str = "invalid data type";
-const CT: &'static str = "failed to parse speedtest output";
+const DT: &str = "invalid data type";
+const CT: &str = "failed to parse speedtest output";
 
 /// Tests current internet speed utilizing speedtest.net.
 #[derive(Debug, structopt::StructOpt)]
