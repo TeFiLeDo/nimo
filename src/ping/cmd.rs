@@ -24,12 +24,12 @@ impl Command {
         let count = config.count;
         let mut targets = Vec::with_capacity(config.targets.len());
         for (name, address) in &config.targets {
-            targets.push((name.clone(), address.clone(), 0u8));
+            targets.push((name.clone(), *address, 0u8));
         }
 
         debug!("running ping");
         for (_name, address, counter) in &mut targets {
-            let mut pinger = Pinger::new(address.clone()).context("failed to create pinger")?;
+            let mut pinger = Pinger::new(*address).context("failed to create pinger")?;
             pinger.timeout(Duration::from_secs(2));
 
             for i in 0..count {

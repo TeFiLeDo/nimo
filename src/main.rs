@@ -56,11 +56,7 @@ async fn main() -> Result<()> {
         return c.execute().context("failed to execute emit");
     }
 
-    let save = match opt.command {
-        Command::Ping(_) => true,
-        Command::SpeedTest(_) => true,
-        _ => false,
-    };
+    let save = matches!(opt.command, Command::Ping(_) | Command::SpeedTest(_));
 
     debug!("loading data");
     let (mut data, mut file) = load_data(&config, save)?;
@@ -116,7 +112,7 @@ fn load_config() -> Result<Config> {
 fn load_data(config: &Config, allow_write: bool) -> Result<(Data, File)> {
     if let Some(x) = config.data.parent() {
         if x.is_file() {
-            return Err(anyhow!("data directory is file"))?;
+            return Err(anyhow!("data directory is file"));
         } else if !x.exists() {
             create_dir_all(x).context("failed to create data directory")?;
         }
