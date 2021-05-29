@@ -58,23 +58,26 @@ fn get_reliability(
     let mut received = 0;
 
     for (recorded, targets) in data {
-        let consider = match after {
+        if !match after {
             Some(after) => recorded >= after,
             None => true,
-        };
+        } {
+            continue;
+        }
 
-        if consider && !clearcut {
+        if !clearcut {
             for target in targets {
                 sent += target.sent;
                 received += target.received;
             }
-        } else if consider && clearcut {
+        } else {
             sent += 1;
 
             for target in targets {
                 if target.received > 0 {
                     received += 1;
-                    break;
+                    break; // we only want to count one successfully pinged target, otherwise we
+                           // would quickly reach success rates far above 100%.
                 }
             }
         }
@@ -96,16 +99,16 @@ fn get_avg_speeds(
     let mut num = 0;
 
     for (recorded, test) in data {
-        let consider = match after {
+        if !match after {
             Some(after) => recorded >= after,
             None => true,
+        } {
+            continue;
         };
 
-        if consider {
-            num += 1;
-            up += test.upload;
-            down += test.download;
-        }
+        num += 1;
+        up += test.upload;
+        down += test.download;
     }
 
     if num == 0 {
