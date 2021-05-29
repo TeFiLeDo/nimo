@@ -62,7 +62,7 @@ async fn main() -> Result<()> {
 
             data.pings.insert(now, res);
         }
-        Command::Report(c) => c.execute(&mut data).context("failed to execute report")?,
+        Command::Report(c) => c.execute(&data).context("failed to execute report")?,
         Command::SpeedTest(s) => {
             let res = s
                 .execute(&config.speed_test)

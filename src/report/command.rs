@@ -20,7 +20,7 @@ pub struct Command {
 }
 
 impl Command {
-    pub fn execute(&self, data: &mut crate::Data) -> Result<()> {
+    pub fn execute(&self, data: &crate::Data) -> Result<()> {
         let after = if !self.last_week {
             None
         } else {
