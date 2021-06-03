@@ -1,0 +1,36 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 15% auto;
+    grid-template-rows: min-content auto;
+    grid-template-areas: "header header" "nav main";
+
+    height: 100%;
+    margin: 0;
+}
+
+body>header {
+    background-color: black;
+    color: white;
+
+    grid-area: header;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+body>nav {
+    background-color: lightgray;
+
+    grid-area: nav;
+}
+
+body>main {
+    grid-area: main;
+
+    margin: 0.25em 1em;
+}

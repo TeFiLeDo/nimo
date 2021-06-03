@@ -22,9 +22,11 @@ home = "0.5"
 human-panic = "1.0"
 include_dir = "0.6"
 log = "0.4"
+plotters = "0.3"
 ron = "0.6"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 structopt = "0.3"
 surge-ping = "0.2"
+tera = "1.10"
 tokio = { version = "1.5", features = ["net", "rt-multi-thread"] }

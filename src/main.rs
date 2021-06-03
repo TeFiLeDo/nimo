@@ -7,6 +7,7 @@ mod config;
 mod data;
 mod emit;
 mod ping;
+mod present;
 mod report;
 mod speedtest;
 
@@ -24,6 +25,7 @@ struct Opt {
 enum Command {
     Emit(emit::Command),
     Ping(ping::Command),
+    Present(present::Command),
     Report(report::Command),
     SpeedTest(speedtest::Command),
 }
@@ -62,6 +64,7 @@ async fn main() -> Result<()> {
 
             data.pings.insert(now, res);
         }
+        Command::Present(c) => c.execute(&data).context("failed to execute present")?,
         Command::Report(c) => c.execute(&data).context("failed to execute report")?,
         Command::SpeedTest(s) => {
             let res = s
